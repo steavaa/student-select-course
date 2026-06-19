@@ -1,0 +1,48 @@
+-- 0. 建库
+CREATE DATABASE student DEFAULT CHARSET utf8;
+USE student;
+
+-- 1. 学生信息表
+CREATE TABLE 学生信息表 (
+    学号 VARCHAR(11) NOT NULL PRIMARY KEY,
+    姓名 VARCHAR(30) NOT NULL,
+    性别 VARCHAR(4),
+    出生日期 DATE,
+    院系 VARCHAR(50)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 2. 课程表（包含您提供的课程）
+CREATE TABLE 课程表 (
+    课程编号 VARCHAR(10) NOT NULL PRIMARY KEY,
+    课程名称 VARCHAR(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 3. 选课记录表
+CREATE TABLE 选课记录表 (
+    选课编号 INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    学号 VARCHAR(11) NOT NULL,
+    课程编号 VARCHAR(10) NOT NULL,
+    FOREIGN KEY (学号) REFERENCES 学生信息表(学号) ON DELETE CASCADE,
+    FOREIGN KEY (课程编号) REFERENCES 课程表(课程编号) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO 学生信息表 (学号, 姓名, 性别, 出生日期, 院系) VALUES
+('20210613026', '石闻天', '男', '2003-02-15', '人文学院'),
+('20210613021', '梅瑞旋', '女', '2003-07-22', '信息学院'),
+('20210613022', '牛嵩天', '男', '2002-11-08', '信息学院'),
+('20210613003', '蔡渝炀', '男', '2003-04-18', '新闻学院'),
+('20210613006', '陈俐旸', '女', '2003-09-30', '人文学院');
+
+-- 插入课程表（您提供的课程）
+INSERT INTO 课程表 (课程编号, 课程名称) VALUES
+('C001', '茶艺'),
+('C002', '数据库'),
+('C003', '新闻写作');
+
+-- 插入选课记录（学生已选的课程）
+INSERT INTO 选课记录表 (学号, 课程编号) VALUES
+('20210613026', 'C001'),  -- 石闻天 → 茶艺
+('20210613021', 'C002'),  -- 梅瑞旋 → 数据库
+('20210613022', 'C002'),  -- 牛嵩天 → 数据库
+('20210613003', 'C003'),  -- 蔡渝炀 → 新闻写作
+('20210613006', 'C001');  -- 陈俐旸 → 茶艺
