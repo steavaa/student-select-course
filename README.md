@@ -1,0 +1,3 @@
+把index.php放在Wampserver64对应www文件夹下（建议再嵌套一个文件夹如test）
+把sqluse.txt打开按顺序输入到mysql控制台不会可以问ai
+本地打开php文件运行
